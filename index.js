@@ -26,8 +26,7 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/users/search', (req, res) => {
-
-    let valSearch = req.query.name ? users.filter( item => item.name.toLowerCase().indexOf(req.query.name.toLowerCase()) !== -1) : users;
+    let valSearch = req.query.name ? users.filter( item => item.name.toLowerCase().indexOf(req.query.name.trim().toLowerCase()) !== -1) : users;
 
     return res.render('users/index', {
         users: valSearch
