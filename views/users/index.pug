@@ -1,11 +1,14 @@
-h1 Users
-a(href="/users/create") create
-form(action="/users/search", method="GET")
-    input(name="name")
+extends ../layouts/layout
 
-    button Search
-ul
-    each user in users
-        li
-            span= user.name + ' '
-            a(href="/users/" + user.id) view
+block content
+    h1 Users
+    a(href="/users/create") create
+    form(action="/users/search", method="GET")
+        input(name="name")
+
+        button Search
+    ul
+        each user in users
+            li
+                span= user.name + ' '
+                a(href="/users/" + user.id) view

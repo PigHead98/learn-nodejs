@@ -1,4 +1,9 @@
-form(action="/users/create", method="POST")
-    label name
-    input(name="name", type="text")
-    button send
+extends ../layouts/layout
+
+block content
+    form(action="/users/create", method="POST")
+        div.form-group.row
+            div.col-5.mx-auto
+                label(for="inputName") type to add new user
+                input(type="text", name='name' , class="form-control", id="inputName")
+                button.mt-2(type="submit" class="btn btn-primary") add
