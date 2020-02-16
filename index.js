@@ -20,5 +20,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/users', userRouter);
+app.use(express.static('public'));
 
 app.listen(port, () => console.log(`your port is ${port}`));

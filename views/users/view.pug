@@ -2,6 +2,15 @@ extends ../layouts/layout
 
 block content
     h1 View User
-    p
-        b Name &nbsp;
-        span= user.name
+    div.list-user
+        table.table
+            tr
+                th Name
+                th Phone
+                th Actions
+            tr
+                td= user.name
+                td= user.phone
+                td
+                    a.btn.btn-warning.mr-2(href='users/edit/'+user.id) Edit
+                    a.btn.btn-danger(href='users/del/'+user.id) Del
