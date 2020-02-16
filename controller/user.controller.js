@@ -31,6 +31,21 @@ module.exports = {
     postCreate : (req, res) => {
         req.body.id = shortid.generate();
 
+        let errors = [];
+        if (!req.body.name) {
+            errors.push('name is required');
+        }
+        if (!req.body.phone) {
+            errors.push('phone is required');
+        }
+
+        if (errors.length) {
+            return res.render('users/create', {
+                errors : errors,
+                data : req.body
+            })
+        }
+
         users('name').push(req.body).write();
 
         return res.redirect('/users');

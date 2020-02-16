@@ -1,9 +1,17 @@
 extends ../layouts/layout
 
 block content
+    if errors
+        each error in errors
+            .alert.alert-danger(role='alert')= error
     form(action="/users/create", method="POST")
         div.form-group.row
+            div.col-12.text-center
+                h2 Create new user
             div.col-5.mx-auto
-                label(for="inputName") type to add new user
-                input(type="text", name='name' , class="form-control", id="inputName")
+                label(for="inputName") Name
+                input(type="text", name='name' , class="form-control", id="inputName", value= data.name ? data.name : "")
+
+                label(for="inputPhone") Phone
+                input(type="text", name='phone' , class="form-control", id="inputPhone", value= data.phone ? data.phone : "")
                 button.mt-2(type="submit" class="btn btn-primary") add
