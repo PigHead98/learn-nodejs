@@ -1,3 +1,5 @@
+const md5 = require('md5');
+
 const db = require('../db');
 
 module.exports = {
@@ -22,7 +24,7 @@ module.exports = {
             })
         }
 
-        if (checkEmail.password !== password) {
+        if (checkEmail.password !== md5(password)) {
             return res.render('auth/login', {
                 errors : [
                     "password is invalid",
@@ -31,7 +33,9 @@ module.exports = {
             })
         }
 
-        res.cookie('userId',checkEmail.id);
+        res.cookie('userId',checkEmail.id, {
+            signed:true
+        });
         res.redirect('/users');
     }
 };

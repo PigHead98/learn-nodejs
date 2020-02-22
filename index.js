@@ -1,4 +1,5 @@
 const express = require('express');
+const randomCookie = require('shortid');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
@@ -16,7 +17,7 @@ app.set('views ', 'pug');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieParser());
+app.use(cookieParser(randomCookie.generate()));
 
 app.get('/', (req, res) => {
     return res.render('index', {

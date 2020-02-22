@@ -2,7 +2,11 @@ const db = require('../../db');
 
 module.exports.requireAuth = (req, res, next) => {
 
-    if ( db.get('name').find({id:req.cookies.userId}).value()) {
+    let user = db.get('name').find({
+            id:req.signedCookies.userId
+    }).value();
+    if ( user ) {
+        res.locals.user = user;
         return next();
     }
 
