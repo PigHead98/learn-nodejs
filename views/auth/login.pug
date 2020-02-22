@@ -1,0 +1,17 @@
+extends ../layouts/layout
+
+block content
+    if errors
+        each error in errors
+            .alert.alert-danger(role='alert')= error
+    form(action="/auth/login", method="POST")
+        div.form-group.row
+            div.col-12.text-center
+                h2 Login
+            div.col-5.mx-auto
+                label(for="inputEmail") Email
+                input(type="text", name='email' , class="form-control", id="inputEmail", value= data ? data.email : "")
+
+                label(for="inputPassword") Password
+                input(type="password", name='password' , class="form-control", id="inputPassword", value= data ? data.password : "")
+                button.mt-2(type="submit" class="btn btn-primary") Login
