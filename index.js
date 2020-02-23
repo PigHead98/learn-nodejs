@@ -1,12 +1,15 @@
 require('dotenv').config();
 
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true});
+
 const app = express();
 
-const port = 3000;
+const port = 3001;
 
 const userRouter = require('./routers/user.route');
 const authRouter = require('./routers/auth.route');

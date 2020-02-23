@@ -1,5 +1,6 @@
 const shortid = require('shortid');
 const db = require('../db');
+const user = require('../models/users.model');
 
 const users = (key) => {
     return db.get(key);
@@ -7,6 +8,11 @@ const users = (key) => {
 
 module.exports = {
     index : (req, res) => {
+        user.find()
+            .then( res => {
+                console.log(res);
+            });
+
         return res.render('users/index', {
             users: users('name').value()
         })
