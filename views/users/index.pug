@@ -11,11 +11,14 @@ block content
     div.list-user
         table.table
             tr
+                th Avatar
                 th Name
                 th Phone
                 th Actions
             each user in users
                 tr
+                    td
+                        img.img-fluid(src= user.image, width=64)
                     td= user.name
                     td= user.phone
                     td

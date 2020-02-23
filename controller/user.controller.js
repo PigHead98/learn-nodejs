@@ -30,7 +30,7 @@ module.exports = {
     },
     postCreate : (req, res) => {
         req.body.id = shortid.generate();
-
+        req.body.image = req.file.path.split("\\").slice(1).join("/");
         users('name').push(req.body).write();
 
         return res.redirect('/users');
