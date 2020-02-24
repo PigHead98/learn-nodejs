@@ -1,24 +1,25 @@
-const shortid = require('shortid');
-const db = require('../db');
-const user = require('../models/users.model');
+const md5 = require('md5');
 
-const users = (key) => {
-    return db.get(key);
-};
+const users = require('../models/users.model');
 
 module.exports = {
-    index : (req, res) => {
-        user.find()
-            .then( res => {
-                console.log(res);
-            });
+    index : async (req, res) => {
+        let user = await users.find();
 
         return res.render('users/index', {
-            users: users('name').value()
+            users: user
         })
     },
-    search : (req, res) => {
-        let valSearch = req.query.name ? users('name').value().filter(item => item.name.toLowerCase().indexOf(req.query.name.trim().toLowerCase()) !== -1) : users('name').value();
+    search : async (req, res) => {
+
+        let dataUsers = await users.find();
+
+        let valSearch = req.query.name
+            ?
+            dataUsers.filter( item =>
+                item.name.toLowerCase().indexOf(req.query.name.trim().toLowerCase()) !== -1)
+            :
+            dataUsers;
 
         return res.render('users/index', {
             users: valSearch
@@ -27,19 +28,32 @@ module.exports = {
     create : (req, res) => {
         return res.render('users/create')
     },
-    view : (req, res) => {
+    view : async (req, res) => {
         let id = req.params.id;
+        let user = await users.findById(id);
 
         return res.render('users/view', {
-            user: db.get('name').find({"id": id}).value()
+            user: user
         })
     },
-    postCreate : (req, res) => {
-        req.body.id = shortid.generate();
-        req.body.image = req.file.path.split("\\").slice(1).join("/");
-        users('name').push(req.body).write();
+    postCreate : async (req, res) => {
+        let imageUrl = '../' + req.file.path.split("\\").slice(1).join("/");
 
-        return res.redirect('/users');
+        let data = {
+            name: req.body.name,
+            phone: req.body.phone,
+            image: imageUrl,
+            email: req.body.email,
+            password: md5(req.body.password),
+        };
+
+        let result = await users.create(data, (err, onDone) => {
+            if (!err) {console.log(onDone);
+                return res.redirect('/users');
+            }
+            return console.log(err)
+        });
+
     }
 
 };

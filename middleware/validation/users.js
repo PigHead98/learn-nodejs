@@ -7,6 +7,10 @@ module.exports.postUser = (req, res, next) => {
         errors.push('phone is required');
     }
 
+    if (req.body.password !== req.body.rePassword) {
+        errors.push('re-password does not like password ');
+    }
+
     if (errors.length) {
         return res.render('users/create', {
             errors : errors,
